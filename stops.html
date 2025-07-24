@@ -99,7 +99,17 @@ window.Quarto = {
 </header>
 
 
-<p>Race and policing are two sensitive topics that continue to raise important questions about fairness and justice in society. Using data from over 400,000 traffic stops in New Orleans collected by the Stanford Open Policing Project between 2011 and 2018, we examine whether Black drivers are arrested at higher rates than White drivers after accounting for sex and officer zone. One potential weakness in our model is that the dataset may not be fully representative of the broader population, as it excludes millions of entries and may disproportionately reflect the behavior of specific officers or zones, potentially biasing the estimated relationship between race and arrest likelihood. Using data from a study of New Orleans drivers, we seek to understand the relationship between driver race and the probability of getting arrested during a traffic stop. However, our data from both the Preceptor Table and the dataset may not fully represent the population, as they may cover different time frames and include entries from potentially biased officers who might disproportionately target certain groups. Still, these concerns do not appear to significantly undermine the validity of either dataset, allowing us to proceed with our analysis. We modeled arrest likelihood as a linear function of driver sex and the interaction between race and police district (zone). Our findings suggest that males are less likely to be arrested than females, after accounting for race and location.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="stops_files/figure-html/plot-predictions-sex-race-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Predicted Arrest Probability by Sex and Race</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Race and policing are two sensitive topics that continue to raise important questions about fairness and justice in society. Using data from over 400,000 traffic stops in New Orleans collected by the Stanford Open Policing Project between 2011 and 2018, we examine whether Black drivers are arrested at higher rates than White drivers after accounting for sex and officer zone. One potential weakness in our model is that the dataset may not be fully representative of the broader population, as it excludes millions of entries and may disproportionately reflect the behavior of specific officers or zones, potentially biasing the estimated relationship between race and arrest likelihood. Using data from a study of New Orleans drivers, we seek to understand the relationship between driver race and the probability of getting arrested during a traffic stop. However, our data from both the Preceptor Table and the dataset may not fully represent the population, as they may cover different time frames and include entries from potentially biased officers who might disproportionately target certain groups. Still, these concerns do not appear to significantly undermine the validity of either dataset, allowing us to proceed with our analysis. We modeled arrest likelihood as a linear function of driver sex and the interaction between race and police district (zone). Our findings suggest that males are less likely to be arrested than females, after accounting for race and location. Exercise 14 Write a few sentences which explain why the estimates for the quantities of interest, and the uncertainty thereof, might be wrong. Suggest an alternative estimate and confidence interval, if you think either might be warranted.</p>
 <p><span class="math display">\[
 P(Y = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_n X_n)}}
 \]</span></p>
