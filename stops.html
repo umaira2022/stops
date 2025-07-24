@@ -99,7 +99,7 @@ window.Quarto = {
 </header>
 
 
-<p>Race and policing are two sensitive topics that continue to raise important questions about fairness and justice in society. Using data from over 400,000 traffic stops in New Orleans collected by the Stanford Open Policing Project between 2011 and 2018, we examine whether Black drivers are arrested at higher rates than White drivers after accounting for sex and officer zone. One potential weakness in our model is that the dataset may not be fully representative of the broader population, as it excludes millions of entries and may disproportionately reflect the behavior of specific officers or zones, potentially biasing the estimated relationship between race and arrest likelihood.</p>
+<p>Race and policing are two sensitive topics that continue to raise important questions about fairness and justice in society. Using data from over 400,000 traffic stops in New Orleans collected by the Stanford Open Policing Project between 2011 and 2018, we examine whether Black drivers are arrested at higher rates than White drivers after accounting for sex and officer zone. One potential weakness in our model is that the dataset may not be fully representative of the broader population, as it excludes millions of entries and may disproportionately reflect the behavior of specific officers or zones, potentially biasing the estimated relationship between race and arrest likelihood. Using data from a study of New Orleans drivers, we seek to understand the relationship between driver race and the probability of getting arrested during a traffic stop. However, our data from both the Preceptor Table and the dataset may not fully represent the population, as they may cover different time frames and include entries from potentially biased officers who might disproportionately target certain groups. Still, these concerns do not appear to significantly undermine the validity of either dataset, allowing us to proceed with our analysis. We modeled arrest likelihood as a linear function of driver sex and the interaction between race and police district (zone). Our findings suggest that males are less likely to be arrested than females, after accounting for race and location.</p>
 <p><span class="math display">\[
 P(Y = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_n X_n)}}
 \]</span></p>
@@ -107,6 +107,802 @@ P(Y = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \bet
 Y \sim \text{Bernoulli}(\rho), \quad \text{where }
 \rho = \frac{1}{1 + e^{-(\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_n X_n)}}
 \]</span></p>
+<p>This is our data generating mechanism.</p>
+<p><span class="math display">\[
+\widehat{\text{arrested}} = 0.177
++ 0.0614 \cdot \text{sex}_{\text{Male}}
+- 0.0445 \cdot \text{race}_{\text{White}}
++ 0.0146 \cdot \text{zone}_{\text{B}}
++ 0.00610 \cdot \text{zone}_{\text{C}}
++ 0.0781 \cdot \text{zone}_{\text{D}}
++ 0.00190 \cdot \text{zone}_{\text{E}}
+- 0.00271 \cdot \text{zone}_{\text{F}}
++ 0.0309 \cdot \text{zone}_{\text{G}}
++ 0.0757 \cdot \text{zone}_{\text{H}}
++ \text{(interaction terms for race and zone)}
+\]</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="imywbilzbs" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#imywbilzbs table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#imywbilzbs thead, #imywbilzbs tbody, #imywbilzbs tfoot, #imywbilzbs tr, #imywbilzbs td, #imywbilzbs th {
+  border-style: none;
+}
+
+#imywbilzbs p {
+  margin: 0;
+  padding: 0;
+}
+
+#imywbilzbs .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#imywbilzbs .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#imywbilzbs .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#imywbilzbs .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#imywbilzbs .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#imywbilzbs .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#imywbilzbs .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#imywbilzbs .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#imywbilzbs .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#imywbilzbs .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#imywbilzbs .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#imywbilzbs .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#imywbilzbs .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#imywbilzbs .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#imywbilzbs .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#imywbilzbs .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#imywbilzbs .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#imywbilzbs .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#imywbilzbs .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#imywbilzbs .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#imywbilzbs .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#imywbilzbs .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#imywbilzbs .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#imywbilzbs .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#imywbilzbs .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#imywbilzbs .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#imywbilzbs .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#imywbilzbs .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#imywbilzbs .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#imywbilzbs .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#imywbilzbs .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#imywbilzbs .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#imywbilzbs .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#imywbilzbs .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#imywbilzbs .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#imywbilzbs .gt_left {
+  text-align: left;
+}
+
+#imywbilzbs .gt_center {
+  text-align: center;
+}
+
+#imywbilzbs .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#imywbilzbs .gt_font_normal {
+  font-weight: normal;
+}
+
+#imywbilzbs .gt_font_bold {
+  font-weight: bold;
+}
+
+#imywbilzbs .gt_font_italic {
+  font-style: italic;
+}
+
+#imywbilzbs .gt_super {
+  font-size: 65%;
+}
+
+#imywbilzbs .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#imywbilzbs .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#imywbilzbs .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#imywbilzbs .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#imywbilzbs .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#imywbilzbs .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#imywbilzbs .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#imywbilzbs .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#imywbilzbs div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<th colspan="4" class="gt_heading gt_title gt_font_normal gt_bottom_border">Estimated Effects of Race, Sex, and Zone on Arrest Probability</th>
+</tr>
+<tr class="gt_col_headings even">
+<th id="term" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">term</th>
+<th id="estimate" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">estimate</th>
+<th id="conf.low" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">conf.low</th>
+<th id="conf.high" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">conf.high</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">(Intercept)</td>
+<td class="gt_row gt_right" headers="estimate">0.177</td>
+<td class="gt_row gt_right" headers="conf.low">0.171</td>
+<td class="gt_row gt_right" headers="conf.high">0.184</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">sexMale</td>
+<td class="gt_row gt_right" headers="estimate">0.061</td>
+<td class="gt_row gt_right" headers="conf.low">0.059</td>
+<td class="gt_row gt_right" headers="conf.high">0.064</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">raceWhite</td>
+<td class="gt_row gt_right" headers="estimate">-0.045</td>
+<td class="gt_row gt_right" headers="conf.low">-0.057</td>
+<td class="gt_row gt_right" headers="conf.high">-0.032</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneB</td>
+<td class="gt_row gt_right" headers="estimate">0.015</td>
+<td class="gt_row gt_right" headers="conf.low">0.005</td>
+<td class="gt_row gt_right" headers="conf.high">0.025</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneC</td>
+<td class="gt_row gt_right" headers="estimate">0.006</td>
+<td class="gt_row gt_right" headers="conf.low">-0.002</td>
+<td class="gt_row gt_right" headers="conf.high">0.014</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneD</td>
+<td class="gt_row gt_right" headers="estimate">0.078</td>
+<td class="gt_row gt_right" headers="conf.low">0.070</td>
+<td class="gt_row gt_right" headers="conf.high">0.086</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneE</td>
+<td class="gt_row gt_right" headers="estimate">0.002</td>
+<td class="gt_row gt_right" headers="conf.low">-0.007</td>
+<td class="gt_row gt_right" headers="conf.high">0.011</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneF</td>
+<td class="gt_row gt_right" headers="estimate">-0.003</td>
+<td class="gt_row gt_right" headers="conf.low">-0.012</td>
+<td class="gt_row gt_right" headers="conf.high">0.007</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneG</td>
+<td class="gt_row gt_right" headers="estimate">0.031</td>
+<td class="gt_row gt_right" headers="conf.low">0.021</td>
+<td class="gt_row gt_right" headers="conf.high">0.041</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneH</td>
+<td class="gt_row gt_right" headers="estimate">0.076</td>
+<td class="gt_row gt_right" headers="conf.low">0.066</td>
+<td class="gt_row gt_right" headers="conf.high">0.085</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneI</td>
+<td class="gt_row gt_right" headers="estimate">0.033</td>
+<td class="gt_row gt_right" headers="conf.low">0.025</td>
+<td class="gt_row gt_right" headers="conf.high">0.041</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneJ</td>
+<td class="gt_row gt_right" headers="estimate">0.024</td>
+<td class="gt_row gt_right" headers="conf.low">0.014</td>
+<td class="gt_row gt_right" headers="conf.high">0.033</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneK</td>
+<td class="gt_row gt_right" headers="estimate">0.059</td>
+<td class="gt_row gt_right" headers="conf.low">0.049</td>
+<td class="gt_row gt_right" headers="conf.high">0.068</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneL</td>
+<td class="gt_row gt_right" headers="estimate">-0.004</td>
+<td class="gt_row gt_right" headers="conf.low">-0.014</td>
+<td class="gt_row gt_right" headers="conf.high">0.006</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneM</td>
+<td class="gt_row gt_right" headers="estimate">0.039</td>
+<td class="gt_row gt_right" headers="conf.low">0.028</td>
+<td class="gt_row gt_right" headers="conf.high">0.050</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneN</td>
+<td class="gt_row gt_right" headers="estimate">0.014</td>
+<td class="gt_row gt_right" headers="conf.low">-0.002</td>
+<td class="gt_row gt_right" headers="conf.high">0.030</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneO</td>
+<td class="gt_row gt_right" headers="estimate">0.023</td>
+<td class="gt_row gt_right" headers="conf.low">0.010</td>
+<td class="gt_row gt_right" headers="conf.high">0.036</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneP</td>
+<td class="gt_row gt_right" headers="estimate">0.014</td>
+<td class="gt_row gt_right" headers="conf.low">-0.001</td>
+<td class="gt_row gt_right" headers="conf.high">0.029</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneQ</td>
+<td class="gt_row gt_right" headers="estimate">0.013</td>
+<td class="gt_row gt_right" headers="conf.low">0.002</td>
+<td class="gt_row gt_right" headers="conf.high">0.023</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneR</td>
+<td class="gt_row gt_right" headers="estimate">0.012</td>
+<td class="gt_row gt_right" headers="conf.low">0.000</td>
+<td class="gt_row gt_right" headers="conf.high">0.024</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneS</td>
+<td class="gt_row gt_right" headers="estimate">0.059</td>
+<td class="gt_row gt_right" headers="conf.low">0.045</td>
+<td class="gt_row gt_right" headers="conf.high">0.074</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneT</td>
+<td class="gt_row gt_right" headers="estimate">0.011</td>
+<td class="gt_row gt_right" headers="conf.low">0.000</td>
+<td class="gt_row gt_right" headers="conf.high">0.022</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneU</td>
+<td class="gt_row gt_right" headers="estimate">0.007</td>
+<td class="gt_row gt_right" headers="conf.low">-0.003</td>
+<td class="gt_row gt_right" headers="conf.high">0.017</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneV</td>
+<td class="gt_row gt_right" headers="estimate">0.077</td>
+<td class="gt_row gt_right" headers="conf.low">0.060</td>
+<td class="gt_row gt_right" headers="conf.high">0.094</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneW</td>
+<td class="gt_row gt_right" headers="estimate">0.114</td>
+<td class="gt_row gt_right" headers="conf.low">0.081</td>
+<td class="gt_row gt_right" headers="conf.high">0.148</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">zoneX</td>
+<td class="gt_row gt_right" headers="estimate">0.006</td>
+<td class="gt_row gt_right" headers="conf.low">-0.008</td>
+<td class="gt_row gt_right" headers="conf.high">0.019</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">zoneY</td>
+<td class="gt_row gt_right" headers="estimate">0.039</td>
+<td class="gt_row gt_right" headers="conf.low">0.022</td>
+<td class="gt_row gt_right" headers="conf.high">0.055</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneB</td>
+<td class="gt_row gt_right" headers="estimate">-0.008</td>
+<td class="gt_row gt_right" headers="conf.low">-0.026</td>
+<td class="gt_row gt_right" headers="conf.high">0.010</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneC</td>
+<td class="gt_row gt_right" headers="estimate">0.007</td>
+<td class="gt_row gt_right" headers="conf.low">-0.009</td>
+<td class="gt_row gt_right" headers="conf.high">0.022</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneD</td>
+<td class="gt_row gt_right" headers="estimate">0.029</td>
+<td class="gt_row gt_right" headers="conf.low">0.015</td>
+<td class="gt_row gt_right" headers="conf.high">0.044</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneE</td>
+<td class="gt_row gt_right" headers="estimate">0.007</td>
+<td class="gt_row gt_right" headers="conf.low">-0.009</td>
+<td class="gt_row gt_right" headers="conf.high">0.023</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneF</td>
+<td class="gt_row gt_right" headers="estimate">-0.014</td>
+<td class="gt_row gt_right" headers="conf.low">-0.031</td>
+<td class="gt_row gt_right" headers="conf.high">0.003</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneG</td>
+<td class="gt_row gt_right" headers="estimate">0.009</td>
+<td class="gt_row gt_right" headers="conf.low">-0.009</td>
+<td class="gt_row gt_right" headers="conf.high">0.027</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneH</td>
+<td class="gt_row gt_right" headers="estimate">0.009</td>
+<td class="gt_row gt_right" headers="conf.low">-0.010</td>
+<td class="gt_row gt_right" headers="conf.high">0.027</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneI</td>
+<td class="gt_row gt_right" headers="estimate">-0.034</td>
+<td class="gt_row gt_right" headers="conf.low">-0.051</td>
+<td class="gt_row gt_right" headers="conf.high">-0.017</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneJ</td>
+<td class="gt_row gt_right" headers="estimate">-0.024</td>
+<td class="gt_row gt_right" headers="conf.low">-0.044</td>
+<td class="gt_row gt_right" headers="conf.high">-0.005</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneK</td>
+<td class="gt_row gt_right" headers="estimate">-0.038</td>
+<td class="gt_row gt_right" headers="conf.low">-0.058</td>
+<td class="gt_row gt_right" headers="conf.high">-0.018</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneL</td>
+<td class="gt_row gt_right" headers="estimate">-0.008</td>
+<td class="gt_row gt_right" headers="conf.low">-0.027</td>
+<td class="gt_row gt_right" headers="conf.high">0.012</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneM</td>
+<td class="gt_row gt_right" headers="estimate">-0.042</td>
+<td class="gt_row gt_right" headers="conf.low">-0.064</td>
+<td class="gt_row gt_right" headers="conf.high">-0.020</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneN</td>
+<td class="gt_row gt_right" headers="estimate">-0.057</td>
+<td class="gt_row gt_right" headers="conf.low">-0.084</td>
+<td class="gt_row gt_right" headers="conf.high">-0.029</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneO</td>
+<td class="gt_row gt_right" headers="estimate">-0.015</td>
+<td class="gt_row gt_right" headers="conf.low">-0.046</td>
+<td class="gt_row gt_right" headers="conf.high">0.016</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneP</td>
+<td class="gt_row gt_right" headers="estimate">0.009</td>
+<td class="gt_row gt_right" headers="conf.low">-0.022</td>
+<td class="gt_row gt_right" headers="conf.high">0.041</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneQ</td>
+<td class="gt_row gt_right" headers="estimate">-0.054</td>
+<td class="gt_row gt_right" headers="conf.low">-0.078</td>
+<td class="gt_row gt_right" headers="conf.high">-0.031</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneR</td>
+<td class="gt_row gt_right" headers="estimate">-0.038</td>
+<td class="gt_row gt_right" headers="conf.low">-0.072</td>
+<td class="gt_row gt_right" headers="conf.high">-0.004</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneS</td>
+<td class="gt_row gt_right" headers="estimate">-0.025</td>
+<td class="gt_row gt_right" headers="conf.low">-0.063</td>
+<td class="gt_row gt_right" headers="conf.high">0.013</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneT</td>
+<td class="gt_row gt_right" headers="estimate">-0.027</td>
+<td class="gt_row gt_right" headers="conf.low">-0.051</td>
+<td class="gt_row gt_right" headers="conf.high">-0.003</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneU</td>
+<td class="gt_row gt_right" headers="estimate">0.038</td>
+<td class="gt_row gt_right" headers="conf.low">0.014</td>
+<td class="gt_row gt_right" headers="conf.high">0.063</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneV</td>
+<td class="gt_row gt_right" headers="estimate">-0.039</td>
+<td class="gt_row gt_right" headers="conf.low">-0.079</td>
+<td class="gt_row gt_right" headers="conf.high">0.001</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneW</td>
+<td class="gt_row gt_right" headers="estimate">-0.123</td>
+<td class="gt_row gt_right" headers="conf.low">-0.232</td>
+<td class="gt_row gt_right" headers="conf.high">-0.014</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneX</td>
+<td class="gt_row gt_right" headers="estimate">0.084</td>
+<td class="gt_row gt_right" headers="conf.low">0.052</td>
+<td class="gt_row gt_right" headers="conf.high">0.116</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">raceWhite:zoneY</td>
+<td class="gt_row gt_right" headers="estimate">0.000</td>
+<td class="gt_row gt_right" headers="conf.low">-0.041</td>
+<td class="gt_row gt_right" headers="conf.high">0.041</td>
+</tr>
+</tbody><tfoot class="gt_sourcenotes">
+<tr class="odd">
+<td colspan="4" class="gt_sourcenote">Source: Stanford Open Policing Project, New Orleans dataset (2020)</td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+</div>
+</div>
 
 </main>
 <!-- /main column -->
